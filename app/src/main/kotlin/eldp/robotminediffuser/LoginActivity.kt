@@ -268,7 +268,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             }
 
             for (credential in DUMMY_CREDENTIALS) {
-                val pieces = credential.split(":".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
+                val pieces = credential.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                 if (pieces[0] == mEmail) {
                     // Account exists, return true if the password matches.
                     return pieces[1] == mPassword

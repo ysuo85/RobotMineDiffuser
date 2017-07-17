@@ -22,6 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".modes.UserModeActivity">
+        </activity>
+        <activity android:name=".modes.MazeTraverseModeActivity">
+        </activity>
+        <activity android:name=".modes.MineDiffuseModeActivity">
+        </activity>
     </application>
 
 </manifest>
