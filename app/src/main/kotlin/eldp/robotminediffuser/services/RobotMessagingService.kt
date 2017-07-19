@@ -29,7 +29,6 @@ class RobotMessagingService : Service() {
     private var mConnectedThread : ConnectedThread? = null
     private var mBinder: IBinder? = null
 
-
     override fun onCreate() {
         Log.d("RobotMessagingService", "Service started")
         super.onCreate()
@@ -46,7 +45,6 @@ class RobotMessagingService : Service() {
         StateConnected
     }
 
-
     @Synchronized private fun connected(mmDevice: BluetoothDevice, mmSocket: BluetoothSocket){
         if(mConnectThread != null){
             mConnectThread!!.cancel()
@@ -54,7 +52,7 @@ class RobotMessagingService : Service() {
         }
 
         if(mConnectedThread != null){
-            mConnectedThread.cancel()
+ ///           mConnectedThread.cancel()
             mConnectedThread = null
         }
 
@@ -94,7 +92,7 @@ class RobotMessagingService : Service() {
                 catch(e1 : IOException){
                     e1.printStackTrace()
                 }
-                connectionFailed()
+  //              connectionFailed()
                 return
             }
         }
@@ -110,9 +108,31 @@ class RobotMessagingService : Service() {
         }
     }
 
-    private class ConnectedThread : Thread() {
+    private class ConnectedThread(socket : BluetoothSocket) : Thread() {
         private var mmSocket : BluetoothSocket? = null
         private var mmInStream : InputStream? = null
         private var mmOutStream : OutputStream? = null
+
+        init {
+            mmSocket = socket
+            var tmpIn: InputStream? = null
+            var tmpOut: OutputStream? = null
+            try {
+                tmpIn = socket.inputStream
+                tmpOut = socket.outputStream
+            } catch(e: IOException) {
+                Log.e("RobotMessagingService", "temp socket not created", e)
+            }
+        }
+
+        fun cancel(){
+            try{
+                mmSocket?.close()
+            }
+            catch(e : IOException)
+            {
+                Log.e("BluetoothConnection", "close() of connected socket failed")
+            }
+        }
     }
 }

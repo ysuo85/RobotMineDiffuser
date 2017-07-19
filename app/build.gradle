@@ -38,6 +38,7 @@ dependencies {
     compile "net.sf.jung:jung-algorithms:2.1.1"
     compile "net.sf.jung:jung-graph-impl:2.1.1"
     compile "net.sf.jung:jung-api:2.1.1"
+    compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.8.8"
 }
 repositories {
     mavenCentral()
