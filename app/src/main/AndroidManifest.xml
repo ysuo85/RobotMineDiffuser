@@ -30,7 +30,7 @@
         </activity>
 
         <service
-                android:name=".services.BluetoothConnectionService"
+                android:name=".services.RobotMessagingService"
                 android:enabled="true"
                 android:exported="true">
         </service>
