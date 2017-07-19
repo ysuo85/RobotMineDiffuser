@@ -1,6 +1,5 @@
 package eldp.robotminediffuser.modes
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import eldp.robotminediffuser.R
 
