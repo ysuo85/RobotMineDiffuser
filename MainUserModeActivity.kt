@@ -24,6 +24,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.AsyncTask
 
+import android.app.Activity
 import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
@@ -44,7 +45,7 @@ import android.Manifest.permission.READ_CONTACTS
 
 open class MainUserModeActivity : AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_mode)
 
@@ -52,95 +53,184 @@ open class MainUserModeActivity : AppCompatActivity() {
         val mMoveBackwardButton = findViewById(R.id.move_backward_button) as Button
         val mTurnLeft = findViewById(R.id.turn_left) as Button
         val mTurnRight = findViewById(R.id.turn_right) as Button
+        val mRaiseClaw = findViewById(R.id.raise_claw) as Button
+        val mLowerClaw = findViewById(R.id.lower_claw) as Button
+        val mOpenClaw = findViewById(R.id.open_claw) as Button
+        val mCloseClaw = findViewById(R.id.raise_claw) as Button
 
-        mMoveForwardButton.setOnClickListener { moveForward(1.0) }
-        mMoveBackwardButton.setOnClickListener { moveAft(1.0) }
-        mTurnLeft.setOnClickListener { turnLeft(1.0) }
-        mTurnRight.setOnClickListener { turnRight(1.0) }
-
-
-        /*val mMoveForwardButton = findViewById(R.id.move_forward_button) as Button
         mMoveForwardButton.setOnTouchListener(OnTouchListener { v, event ->
             when (event.action) {
-                MotionEvent.ACTION_DOWN ->
+                MotionEvent.ACTION_DOWN -> {
                     moveForward(1.0)
                     return@OnTouchListener true
-                MotionEvent.ACTION_UP ->
+                }
+                MotionEvent.ACTION_UP -> {
                     // Released
                     return@OnTouchListener true
-                MotionEvent.ACTION_CANCEL ->
+                }
+                MotionEvent.ACTION_CANCEL -> {
                     // Released - Dragged finger outside
                     return@OnTouchListener true
+                }
             }
             false
         })
 
-        val mMoveBackwardButton = findViewById(R.id.move_backward_button) as Button
+
         mMoveBackwardButton.setOnTouchListener(OnTouchListener { v, event ->
             when (event.action) {
-                MotionEvent.ACTION_DOWN ->
+                MotionEvent.ACTION_DOWN -> {
                     moveAft(1.0)
                 return@OnTouchListener true
-                        MotionEvent.ACTION_UP ->
+                }
+                MotionEvent.ACTION_UP -> {
                     // Released
                     return@OnTouchListener true
-                MotionEvent.ACTION_CANCEL ->
+                }
+                MotionEvent.ACTION_CANCEL -> {
                     // Released - Dragged finger outside
                     return@OnTouchListener true
+                }
             }
             false
         })
 
-        val mTurnLeft = findViewById(R.id.turn_left) as Button
         mTurnLeft.setOnTouchListener(OnTouchListener { v, event ->
             when (event.action) {
-                MotionEvent.ACTION_DOWN ->
+                MotionEvent.ACTION_DOWN -> {
                     turnLeft(1.0)
-                return@OnTouchListener true
-                        MotionEvent.ACTION_UP ->
+                    return@OnTouchListener true
+                }
+                MotionEvent.ACTION_UP -> {
                     // Released
                     return@OnTouchListener true
-                MotionEvent.ACTION_CANCEL ->
+                }
+                MotionEvent.ACTION_CANCEL -> {
                     // Released - Dragged finger outside
                     return@OnTouchListener true
+                }
             }
             false
         })
 
-        val mTurnRight = findViewById(R.id.turn_right) as Button
         mTurnRight.setOnTouchListener(OnTouchListener { v, event ->
             when (event.action) {
-                MotionEvent.ACTION_DOWN ->
+                MotionEvent.ACTION_DOWN -> {
                     turnRight(1.0)
-                return@OnTouchListener true
-                        MotionEvent.ACTION_UP ->
+                    return@OnTouchListener true
+                }
+                MotionEvent.ACTION_UP -> {
                     // Released
                     return@OnTouchListener true
-                MotionEvent.ACTION_CANCEL ->
+                }
+                MotionEvent.ACTION_CANCEL -> {
                     // Released - Dragged finger outside
                     return@OnTouchListener true
+                }
             }
             false
-        })*/
+        })
+
+        mRaiseClaw.setOnTouchListener(OnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    raiseClaw(1.0)
+                    return@OnTouchListener true
+                }
+                MotionEvent.ACTION_UP -> {
+                    // Released
+                    return@OnTouchListener true
+                }
+                MotionEvent.ACTION_CANCEL -> {
+                    // Released - Dragged finger outside
+                    return@OnTouchListener true
+                }
+            }
+            false
+        })
+
+        mLowerClaw.setOnTouchListener(OnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    lowerClaw(1.0)
+                    return@OnTouchListener true
+                }
+                MotionEvent.ACTION_UP -> {
+                    // Released
+                    return@OnTouchListener true
+                }
+                MotionEvent.ACTION_CANCEL -> {
+                    // Released - Dragged finger outside
+                    return@OnTouchListener true
+                }
+            }
+            false
+        })
+
+        mOpenClaw.setOnClickListener { openClaw() }
+        mCloseClaw.setOnClickListener { closeClaw() }
+
     }
 
-    fun moveForward(distance : Double){
-        move(distance, 0.0)
+    fun moveForward(distance : Double? = null){
+        when(distance){
+            null -> moveBot(-1.0, 0.0)
+            else -> moveBot(distance, 0.0)
+        }
     }
 
-    fun moveAft(distance : Double){
-        move(-distance, 0.0)
+    fun moveAft(distance : Double? = null){
+        when(distance){
+            null -> moveBot(-1.0, 0.0)
+            else -> moveBot(distance, 0.0)
+        }
     }
 
-    fun turnLeft(distance : Double){
-        move(distance, -90.0)
+    fun turnLeft(angle : Double? = null){
+        when(angle){
+            null -> moveBot(0.0, -1.0)
+            else -> moveBot(0.0, angle)
+        }
     }
 
-    fun turnRight(distance : Double){
-        move(distance, 90.0)
+    fun turnRight(distance : Double? = null){
+        when(distance){
+            null -> moveBot(-1.0, 0.0)
+            else -> moveBot(distance, 0.0)
+        }
     }
 
-    fun move(distance : Double, orientationDegree : Double){
+    fun raiseClaw(distance : Double? = null){
+        when(distance){
+            null -> moveArm(-1.0, 0.0)
+            else -> moveArm(distance, 0.0)
+        }
+    }
+
+    fun lowerClaw(distance : Double? = null){
+        when(distance){
+            null -> moveArm(-1.0, 0.0)
+            else -> moveArm(distance, 0.0)
+        }
+    }
+
+    fun openClaw(){
+
+    }
+
+    fun closeClaw(){
+
+    }
+
+    fun moveBot(distance : Double, orientationDegree : Double){
+        // TODO: Implement class to send bluetooth directional data
+    }
+
+    fun moveArm(distance : Double, orientationDegree : Double){
+        // TODO: Implement class to send bluetooth directional data
+    }
+
+    fun moveGrabber(distance : Double, orientationDegree : Double){
         // TODO: Implement class to send bluetooth directional data
     }
 
