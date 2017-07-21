@@ -214,11 +214,7 @@ open class MainUserModeActivity : AppCompatActivity() {
         }
     }
 
-    fun openClaw(){
-
-    }
-
-    fun closeClaw(){
+    fun operateClaw(){
 
     }
 

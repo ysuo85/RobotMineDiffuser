@@ -54,6 +54,13 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         mEmailView = findViewById(R.id.email) as AutoCompleteTextView
         populateAutoComplete()
 
+        val intent : Intent = getIntent();
+        val lock_flag : Bool = intent.getBoolExtra("lock_flag", false)
+
+        if(lock_flag) {
+            /* display lock icon on login screen */
+        }
+
         mPasswordView = findViewById(R.id.password) as EditText
         mPasswordView!!.setOnEditorActionListener(TextView.OnEditorActionListener { textView, id, keyEvent ->
             if (id == R.id.login || id == EditorInfo.IME_NULL) {
@@ -68,6 +75,8 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
         mLoginFormView = findViewById(R.id.login_form)
         mProgressView = findViewById(R.id.login_progress)
+
+
     }
 
     private fun populateAutoComplete() {

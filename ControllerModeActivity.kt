@@ -51,18 +51,32 @@ open class ControllerModeActivity : AppCompatActivity() {
 
         val mKillButton = findViewById(R.id.kill_button) as Button
         val mLockButton = findViewById(R.id.lock_button) as Button
+        val mCommandButton = findViewById(R.id.command_button) as Button
 
         mKillButton.setOnClickListener { kill() }
         mLockButton.setOnClickListener { lock() }
+        mCommandButton.setOnClickListener { command_mode() }
+
 
     }
 
     fun kill(){
+        /* TODO: Send to bluetooth */
 
+        )
     }
 
     fun lock(){
+        /* TODO: Send to bluetooth */
 
+        val intent = Intent(this, LoginActivity::class.kt)
+        intent.putExtra("lock_flag", true)
+        startActivity(intent)
+    }
+
+    fun command_mode() {
+        val intent = Intent(this, MainUserModeActivity::class.kt)
+        startActivity(intent)
     }
 }
 
