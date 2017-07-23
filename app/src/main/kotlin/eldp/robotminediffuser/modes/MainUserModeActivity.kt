@@ -61,15 +61,16 @@ open class MainUserModeActivity : AppCompatActivity() {
         mMoveForwardButton.setOnTouchListener(OnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    SendCommand()
+                    sendCommand(ForwardCommand(true))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_UP -> {
                     // Released
+                    sendCommand(ForwardCommand(false))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_CANCEL -> {
-                    // Released - Dragged finger outside
+                    sendCommand(ForwardCommand(false))
                     return@OnTouchListener true
                 }
             }
@@ -80,15 +81,15 @@ open class MainUserModeActivity : AppCompatActivity() {
         mMoveBackwardButton.setOnTouchListener(OnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-
-                return@OnTouchListener true
+                    sendCommand(BackwardCommand(true))
+                    return@OnTouchListener true
                 }
                 MotionEvent.ACTION_UP -> {
-                    // Released
+                    sendCommand(BackwardCommand(false))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_CANCEL -> {
-                    // Released - Dragged finger outside
+                    sendCommand(BackwardCommand(false))
                     return@OnTouchListener true
                 }
             }
@@ -98,15 +99,15 @@ open class MainUserModeActivity : AppCompatActivity() {
         mTurnLeft.setOnTouchListener(OnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    turnLeft(1.0)
+                    sendCommand(TurnLeftCommand(true))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_UP -> {
-                    // Released
+                    sendCommand(TurnLeftCommand(false))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_CANCEL -> {
-                    // Released - Dragged finger outside
+                    sendCommand(TurnLeftCommand(false))
                     return@OnTouchListener true
                 }
             }
@@ -116,15 +117,17 @@ open class MainUserModeActivity : AppCompatActivity() {
         mTurnRight.setOnTouchListener(OnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    turnRight(1.0)
+                    sendCommand(TurnRightCommand(true))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_UP -> {
                     // Released
+                    sendCommand(TurnRightCommand(false))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_CANCEL -> {
                     // Released - Dragged finger outside
+                    sendCommand(TurnRightCommand(false))
                     return@OnTouchListener true
                 }
             }
@@ -134,15 +137,17 @@ open class MainUserModeActivity : AppCompatActivity() {
         mRaiseClaw.setOnTouchListener(OnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    raiseClaw(1.0)
+                    sendCommand(RaiseCraneCommand(true))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_UP -> {
                     // Released
+                    sendCommand(RaiseCraneCommand(false))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_CANCEL -> {
                     // Released - Dragged finger outside
+                    sendCommand(RaiseCraneCommand(false))
                     return@OnTouchListener true
                 }
             }
@@ -152,23 +157,25 @@ open class MainUserModeActivity : AppCompatActivity() {
         mLowerClaw.setOnTouchListener(OnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    lowerClaw(1.0)
+                    sendCommand(LowerCraneCommand(true))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_UP -> {
                     // Released
+                    sendCommand(LowerCraneCommand(false))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_CANCEL -> {
                     // Released - Dragged finger outside
+                    sendCommand(LowerCraneCommand(false))
                     return@OnTouchListener true
                 }
             }
             false
         })
 
-        mOpenClaw.setOnClickListener { openClaw() }
-        mCloseClaw.setOnClickListener { closeClaw() }
+        mOpenClaw.setOnClickListener { sendCommand(OpenClawCommand) }
+        mCloseClaw.setOnClickListener { sendCommand(CloseClawCommand) }
 
     }
 
