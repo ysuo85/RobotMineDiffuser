@@ -31,6 +31,7 @@ import android.widget.TextView
 import java.util.ArrayList
 
 import android.Manifest.permission.READ_CONTACTS
+import android.content.Intent
 
 /**
  * A login screen that offers login via email/password.
@@ -80,8 +81,6 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
         mLoginFormView = findViewById(R.id.login_form)
         mProgressView = findViewById(R.id.login_progress)
-
-
     }
 
     private fun populateAutoComplete() {

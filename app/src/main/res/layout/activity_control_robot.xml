@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_maze_traverse_mode"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/darker_gray"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="eldp.robotminediffuser.modes.MazeTraverseModeActivity">
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button5"
+        android:layout_alignBottom="@+id/button5"
+        android:layout_alignParentEnd="true"
+        android:background="@android:color/black"
+        android:text="Right"
+        android:textColor="@android:color/holo_green_light"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_green_light"
+        android:text="Stop"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:layout_above="@+id/button12"
+        android:layout_alignEnd="@+id/button10"
+        android:layout_marginBottom="36dp" />
+
+    <Button
+        android:id="@+id/button10"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:background="@android:color/black"
+        android:text="Forward"
+        android:textColor="@android:color/holo_green_light"
+        android:textSize="18sp"
+        android:layout_above="@+id/button5"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/button12"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:background="@android:color/black"
+        android:text="Reverse"
+        android:textColor="@android:color/holo_green_light"
+        android:textSize="18sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/button5"
+        android:layout_marginBottom="27dp" />
+
+    <Button
+        android:id="@+id/button13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button5"
+        android:layout_alignBottom="@+id/button5"
+        android:layout_alignParentStart="true"
+        android:background="@android:color/black"
+        android:text="Left"
+        android:textColor="@android:color/holo_green_light"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/button14"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="26dp"
+        android:layout_toStartOf="@+id/button10"
+        android:text="Arm Up"
+        android:textSize="18sp"
+        />
+
+    <Button
+        android:id="@+id/button15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/button14"
+        android:layout_below="@+id/button14"
+        android:layout_marginTop="25dp"
+        android:text="Arm Down"
+        android:textSize="18sp"
+        />
+
+    <Button
+        android:id="@+id/button16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Claw Open"
+        android:textSize="18sp"
+        android:layout_above="@+id/button15"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:id="@+id/button18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/button16"
+        android:layout_alignTop="@+id/button15"
+        android:text="Claw Colse"
+        android:textSize="18sp"
+        />
+</RelativeLayout>
