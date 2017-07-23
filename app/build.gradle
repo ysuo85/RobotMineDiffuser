@@ -32,6 +32,13 @@ dependencies {
     compile 'com.android.support:design:26.0.0-alpha1'
     testCompile 'junit:junit:4.12'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile "net.sf.jung:jung-samples:2.1.1"
+    compile "net.sf.jung:jung-visualization:2.1.1"
+    compile "net.sf.jung:jung-io:2.1.1"
+    compile "net.sf.jung:jung-algorithms:2.1.1"
+    compile "net.sf.jung:jung-graph-impl:2.1.1"
+    compile "net.sf.jung:jung-api:2.1.1"
+    compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.8.8"
 }
 repositories {
     mavenCentral()

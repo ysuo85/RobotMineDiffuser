@@ -13,12 +13,33 @@
             android:label="@string/app_name"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+<<<<<<< HEAD
+=======
+        <activity
+                android:name=".LoginActivity"
+                android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+>>>>>>> bb2a39d47dc69cca2c5da3cb95ddbfd74f037e68
         <activity android:name=".modes.UserModeActivity">
         </activity>
         <activity android:name=".modes.MazeTraverseModeActivity">
         </activity>
         <activity android:name=".modes.MineDiffuseModeActivity">
         </activity>
+<<<<<<< HEAD
+=======
+
+        <service
+                android:name=".services.RobotMessagingService"
+                android:enabled="true"
+                android:exported="true">
+        </service>
+>>>>>>> bb2a39d47dc69cca2c5da3cb95ddbfd74f037e68
     </application>
 
 </manifest>

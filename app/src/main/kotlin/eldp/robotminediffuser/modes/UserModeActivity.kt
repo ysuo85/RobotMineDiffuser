@@ -7,9 +7,6 @@ import android.content.Intent
 import android.view.View
 import android.widget.EditText
 
-
-
-
 open class UserModeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,33 +14,18 @@ open class UserModeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_robot_mode_main_screen)
     }
 
-    inner class MainActivity : AppCompatActivity() {
-        override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
-            setContentView(R.layout.activity_robot_mode_main_screen)
-        }
-
-        /** Called when the user taps the Send button  */
-        fun sendMessage(view: View) {
-            val intent = Intent(this, DisplayMessageActivity::class.)
-            val editText = findViewById(R.id.editText) as EditText
-            val message = editText.text.toString()
-            intent.putExtra(EXTRA_MESSAGE, message)
-            startActivity(intent)
-        }
-
-        companion object {
-            val EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE"
-        }
+    /** Called when the user taps the Send button  */
+    fun sendMessage(view: View) {
+        val intent = Intent(this, ControlRobotActivity::class.java)
+        startActivity(intent)
     }
 
-        }
-
-        /** Called when the user taps the Send button  */
-        fun sendMessage(view: View) {
-            // Do something in response to button
-        }
+    companion object {
+        val EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE"
     }
+
+    fun moveForward(distance : Double){
+        move(distance, 0.0)
     }
 
     fun moveAft(distance : Double){
