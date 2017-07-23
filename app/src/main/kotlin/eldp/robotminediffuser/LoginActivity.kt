@@ -55,10 +55,15 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         populateAutoComplete()
 
         val intent : Intent = getIntent();
-        val lock_flag : Bool = intent.getBoolExtra("lock_flag", false)
+        val lock_flag : Boolean = intent.getBooleanExtra("lock_flag", false)
+        val kill_flag : Boolean = intent.getBooleanExtra("kill_flag", false)
 
         if(lock_flag) {
             /* display lock icon on login screen */
+        }
+
+        if(kill_flag) {
+            /* display skull and crossbones icon on login screen */
         }
 
         mPasswordView = findViewById(R.id.password) as EditText
