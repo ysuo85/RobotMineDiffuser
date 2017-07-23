@@ -18,17 +18,23 @@ import java.io.InputStream
 import java.io.OutputStream
 
 class RobotMessagingService : Service() {
-    private val mHandler: Handler? = null // handler that gets info from Bluetooth service
+    private val TAG = "ROBOT_MESSAGING_SERVICE"
+    private val ARDUINO_BT_NAME = "ysuomac"
+    private var mHandler: Handler ?= null // handler that gets info from Bluetooth service
     private val mMessenger: Messenger
+    private val mBinder : IBinder
     private var mRobotConnection : ConnectedThread ?= null
-    private val mapper = jacksonObjectMapper()
     private val mBluetoothAdapter : BluetoothAdapter
+    private val mapper = jacksonObjectMapper()
+
     private val mReceiver : BroadcastReceiver = object : BroadcastReceiver(){
         override fun onReceive(context : Context, intent : Intent){
             val action = intent.action
             if(BluetoothDevice.ACTION_FOUND == action){
                 val device : BluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
-                if(device.name == ARDUINO_BT_NAME){
+                Log.d(TAG, "FOUND BLUETOOTH DEVICE: ${device.name}")
+                if(device.name.equals(ARDUINO_BT_NAME)){
+                    Log.d(TAG, "BLUETOOTH DEVICE FOUND")
                     ConnectThread(device).start()
                 }
             }
@@ -38,14 +44,16 @@ class RobotMessagingService : Service() {
     init {
         mMessenger = Messenger(IncomingHandler())
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+        mBinder = LocalBinder()
     }
 
     override fun onCreate() {
+        super.onCreate()
         val filter = IntentFilter(BluetoothDevice.ACTION_FOUND)
+        mHandler = Handler()
         registerReceiver(mReceiver, filter)
-    }
+        Log.d(TAG, "ROBOTMESSAGINGSERVICE CREATED")
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if(mBluetoothAdapter == null){
             Toast.makeText(applicationContext, "Bluetooth unsupported", Toast.LENGTH_SHORT).show()
         }
@@ -60,8 +68,13 @@ class RobotMessagingService : Service() {
             var deviceFound = false
             if(pairedDevices.size > 0){
                 for(device : BluetoothDevice in pairedDevices){
+                    val name = device.name
                     // Find the device with matching name and attempt to connect to it
-                    if(device.name == ARDUINO_BT_NAME){
+                    Log.d(TAG, "PAIRED DEVICE: $name")
+                    Log.d(TAG, "LOOKING FOR: $ARDUINO_BT_NAME")
+                    if(device.name.equals(ARDUINO_BT_NAME)){
+                        Log.d(TAG, "BLUETOOTH DEVICE FOUND")
+                        Toast.makeText(applicationContext, "Bluetooth device found...", Toast.LENGTH_SHORT).show()
                         ConnectThread(device).start()
                         deviceFound = true
                         break
@@ -72,18 +85,34 @@ class RobotMessagingService : Service() {
                 mBluetoothAdapter.startDiscovery()
             }
         }
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        super.onStartCommand(intent, flags, startId)
+        Log.d(TAG, "ROBOTMESSAGINGSERVICE STARTED")
         return START_STICKY
     }
 
     override fun onBind(intent : Intent?): IBinder {
-        Toast.makeText(applicationContext, "binding", Toast.LENGTH_SHORT).show()
-        return mMessenger.binder
+        Toast.makeText(applicationContext, "Binding activity to service...", Toast.LENGTH_SHORT).show()
+        return mBinder
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mRobotConnection?.cancel()
+        mRobotConnection!!.cancel()
         unregisterReceiver(mReceiver)
+    }
+
+    fun sendCommand(command : ArduinoMessage){
+        Log.d(TAG, "Sending stop command...")
+        mRobotConnection?.write(mapper.writeValueAsBytes(command))
+    }
+
+    inner class LocalBinder : Binder() {
+        fun getService() : RobotMessagingService {
+            return this@RobotMessagingService
+        }
     }
 
     // Defines several constants used when transmitting messages between the
@@ -98,8 +127,7 @@ class RobotMessagingService : Service() {
 
     private inner class IncomingHandler : Handler() {
         override fun handleMessage(msg: Message?) {
-            val llArduinoMessage : ArduinoMessage = msg!!.data.getSerializable("command") as ArduinoMessage
-            mRobotConnection?.write(mapper.writeValueAsBytes(llArduinoMessage))
+            Toast.makeText(applicationContext, msg!!.data.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -129,6 +157,7 @@ class RobotMessagingService : Service() {
                 // Connect to the remote device through the socket. This call blocks
                 // until it succeeds or throws an exception.
                 mmSocket.connect()
+                Log.d(TAG, "Bluetooth connection established")
             } catch (connectException: IOException) {
                 // Unable to connect; close the socket and return.
                 try {
@@ -168,12 +197,14 @@ class RobotMessagingService : Service() {
             // member streams are final.
             try {
                 tmpIn = mmSocket.inputStream
+                Log.d(TAG,"Read stream established")
             } catch (e: IOException) {
                 Log.e(TAG, "Error occurred when creating input stream", e)
             }
 
             try {
                 tmpOut = mmSocket.outputStream
+                Log.d(TAG, "Write stream established")
             } catch (e: IOException) {
                 Log.e(TAG, "Error occurred when creating output stream", e)
             }
@@ -221,7 +252,7 @@ class RobotMessagingService : Service() {
                 bundle.putString("toast",
                         "Couldn't send data to the other device")
                 writeErrorMsg.data = bundle
-                mHandler.sendMessage(writeErrorMsg)
+                mHandler!!.sendMessage(writeErrorMsg)
             }
         }
 
@@ -233,10 +264,5 @@ class RobotMessagingService : Service() {
                 Log.e(TAG, "Could not close the connect socket", e)
             }
         }
-    }
-
-    companion object {
-        private val TAG = "MY_APP_DEBUG_TAG"
-        private val ARDUINO_BT_NAME = "Makebot"
     }
 }
