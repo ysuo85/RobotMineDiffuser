@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "eldp.robotminediffuser"
         minSdkVersion 19
-        targetSdkVersion 26
+        targetSdkVersion 19
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -21,10 +21,13 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -32,14 +35,10 @@ dependencies {
     compile 'com.android.support:design:26.0.0-alpha1'
     testCompile 'junit:junit:4.12'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    compile "net.sf.jung:jung-samples:2.1.1"
-    compile "net.sf.jung:jung-visualization:2.1.1"
-    compile "net.sf.jung:jung-io:2.1.1"
-    compile "net.sf.jung:jung-algorithms:2.1.1"
-    compile "net.sf.jung:jung-graph-impl:2.1.1"
-    compile "net.sf.jung:jung-api:2.1.1"
-    compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.8.8"
+    compile 'org.jgrapht:jgrapht-core:0.9.1'
+    compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.8.8'
 }
+
 repositories {
     mavenCentral()
 }
