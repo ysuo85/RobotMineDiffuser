@@ -61,9 +61,12 @@ open class ControllerModeActivity : AppCompatActivity() {
     }
 
     fun kill(){
-        /* TODO: Send to bluetooth */
+        /* Send to bluetooth */
 
-        )
+
+        val intent = Intent(this, LoginActivity::class.kt)
+        intent.putExtra("kill_flag", true)
+        startActivity(intent)
     }
 
     fun lock(){
