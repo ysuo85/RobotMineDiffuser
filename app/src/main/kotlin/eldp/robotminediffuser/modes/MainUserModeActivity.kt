@@ -61,7 +61,7 @@ open class MainUserModeActivity : AppCompatActivity() {
         mMoveForwardButton.setOnTouchListener(OnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    moveForward(1.0)
+                    SendCommand()
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_UP -> {
@@ -80,7 +80,7 @@ open class MainUserModeActivity : AppCompatActivity() {
         mMoveBackwardButton.setOnTouchListener(OnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    moveAft(1.0)
+
                 return@OnTouchListener true
                 }
                 MotionEvent.ACTION_UP -> {
@@ -172,7 +172,7 @@ open class MainUserModeActivity : AppCompatActivity() {
 
     }
 
-    fun moveForward(distance : Double? = null){
+    /*fun moveForward(distance : Double? = null){
         when(distance){
             null -> moveBot(-1.0, 0.0)
             else -> moveBot(distance, 0.0)
@@ -232,5 +232,5 @@ open class MainUserModeActivity : AppCompatActivity() {
 
     fun stop(){
         // TODO: Implement class to send bluetooth directional data
-    }
+    }*/
 }

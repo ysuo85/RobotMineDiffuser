@@ -6,4 +6,4 @@ import eldp.robotminediffuser.modes.DirectionEnum
 /**
  * Created by yisuo on 7/17/17.
  */
-data class MoveCommand (val distance : Double, val orientationDegree : Double)
+data class ForwardCommand (val forward : Boolean)
