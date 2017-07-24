@@ -31,6 +31,7 @@ import android.widget.TextView
 import java.util.ArrayList
 
 import android.Manifest.permission.READ_CONTACTS
+import android.content.Intent
 
 /**
  * A login screen that offers login via email/password.
@@ -55,10 +56,15 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         populateAutoComplete()
 
         val intent : Intent = getIntent();
-        val lock_flag : Bool = intent.getBoolExtra("lock_flag", false)
+        val lock_flag : Boolean = intent.getBooleanExtra("lock_flag", false)
+        val kill_flag : Boolean = intent.getBooleanExtra("kill_flag", false)
 
         if(lock_flag) {
             /* display lock icon on login screen */
+        }
+
+        if(kill_flag) {
+            /* display skull and crossbones icon on login screen */
         }
 
         mPasswordView = findViewById(R.id.password) as EditText
@@ -75,8 +81,6 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
         mLoginFormView = findViewById(R.id.login_form)
         mProgressView = findViewById(R.id.login_progress)
-
-
     }
 
     private fun populateAutoComplete() {

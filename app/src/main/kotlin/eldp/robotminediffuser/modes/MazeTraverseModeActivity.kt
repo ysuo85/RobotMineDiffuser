@@ -1,11 +1,12 @@
 package eldp.robotminediffuser.modes
 
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import eldp.robotminediffuser.R
 import eldp.robotminediffuser.data.MazeSequence
 import java.util.*
 
-class MazeTraverseModeActivity : UserModeActivity() {
+class MazeTraverseModeActivity : AppCompatActivity() {
     private var mMazeSequence : Stack<MazeSequence> = Stack<MazeSequence>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +33,7 @@ class MazeTraverseModeActivity : UserModeActivity() {
             if(correctedOrientation > 180.0){
                 correctedOrientation -= 360.0
             }
-            move(nextCmd.distanceTraveled, nextCmd.orientationDegrees + 180.0)
+//            move(nextCmd.distanceTraveled, nextCmd.orientationDegrees + 180.0)
         }
     }
 }
