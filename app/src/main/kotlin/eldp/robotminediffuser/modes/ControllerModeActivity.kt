@@ -1,53 +1,42 @@
 package eldp.robotminediffuser.modes
 
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
+import android.os.Bundle
+import android.os.IBinder
 import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
 import android.widget.Button
+import eldp.robotminediffuser.LoginActivity
 import eldp.robotminediffuser.R
-
-
-import android.view.MotionEvent;
-
-import android.view.*;
-
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.annotation.TargetApi
-import android.content.pm.PackageManager
-//import android.support.design.widget.Snackbar
-//import android.support.v7.app.AppCompatActivity
-import android.app.LoaderManager.LoaderCallbacks
-
-import android.content.CursorLoader
-import android.content.Loader
-import android.database.Cursor
-import android.net.Uri
-import android.os.AsyncTask
-
-import android.app.Activity
-import android.os.Build
-import android.os.Bundle
-import android.provider.ContactsContract
-import android.text.TextUtils
-import android.view.KeyEvent
-import android.view.View
-import android.view.View.OnTouchListener
-import android.view.inputmethod.EditorInfo
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-
-import java.util.ArrayList
-
-import android.Manifest.permission.READ_CONTACTS
+import eldp.robotminediffuser.data.ArduinoMessage
+import eldp.robotminediffuser.data.CommandType
+import eldp.robotminediffuser.services.RobotMessagingService
 
 open class ControllerModeActivity : AppCompatActivity() {
+    var mRobotMessagingService: RobotMessagingService?= null
+    var mBound = false
 
-    fun onCreate(savedInstanceState: Bundle?) {
+    val mConnection = object : ServiceConnection {
+        override fun onServiceConnected(className: ComponentName?, service : IBinder?) {
+            val binder = service as RobotMessagingService.LocalBinder
+            mRobotMessagingService = binder.getService()
+            mBound = true
+        }
+
+        override fun onServiceDisconnected(className: ComponentName?) {
+            mBound = false
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_user_mode)
+        setContentView(R.layout.activity_robot_mode_main_screen)
+
+        val intent = Intent(this, RobotMessagingService::class.java)
+        startService(intent)
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE)
 
         val mKillButton = findViewById(R.id.kill_button) as Button
         val mLockButton = findViewById(R.id.lock_button) as Button
@@ -56,29 +45,26 @@ open class ControllerModeActivity : AppCompatActivity() {
         mKillButton.setOnClickListener { kill() }
         mLockButton.setOnClickListener { lock() }
         mCommandButton.setOnClickListener { command_mode() }
-
-
     }
 
     fun kill(){
-        /* Send to bluetooth */
-
-
-        val intent = Intent(this, LoginActivity::class.kt)
+        mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.Kill))
+        val intent = Intent(this, LoginActivity::class.java)
         intent.putExtra("kill_flag", true)
         startActivity(intent)
     }
 
     fun lock(){
-        /* TODO: Send to bluetooth */
+        mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.Lock))
 
-        val intent = Intent(this, LoginActivity::class.kt)
+        val intent = Intent(this, LoginActivity::class.java)
         intent.putExtra("lock_flag", true)
         startActivity(intent)
     }
 
     fun command_mode() {
-        val intent = Intent(this, MainUserModeActivity::class.kt)
+        mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.Unlock))
+        val intent = Intent(this, MainUserModeActivity::class.java)
         startActivity(intent)
     }
 }

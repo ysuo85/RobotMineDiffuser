@@ -1,53 +1,43 @@
 package eldp.robotminediffuser.modes
 
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
+import android.os.Bundle
+import android.os.IBinder
 import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
-import android.widget.Button
-import eldp.robotminediffuser.R
-
-
-import android.view.MotionEvent;
-
-import android.view.*;
-
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.annotation.TargetApi
-import android.content.pm.PackageManager
-//import android.support.design.widget.Snackbar
-//import android.support.v7.app.AppCompatActivity
-import android.app.LoaderManager.LoaderCallbacks
-
-import android.content.CursorLoader
-import android.content.Loader
-import android.database.Cursor
-import android.net.Uri
-import android.os.AsyncTask
-
-import android.app.Activity
-import android.os.Build
-import android.os.Bundle
-import android.provider.ContactsContract
-import android.text.TextUtils
-import android.view.KeyEvent
+import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
-import android.view.inputmethod.EditorInfo
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-
-import java.util.ArrayList
-
-import android.Manifest.permission.READ_CONTACTS
+import eldp.robotminediffuser.R
+import eldp.robotminediffuser.data.*
+import eldp.robotminediffuser.services.RobotMessagingService
 
 open class MainUserModeActivity : AppCompatActivity() {
+    var mRobotMessagingService: RobotMessagingService ?= null
+    var mBound = false
 
-    fun onCreate(savedInstanceState: Bundle?) {
+    val mConnection = object : ServiceConnection {
+        override fun onServiceConnected(className: ComponentName?, service : IBinder?) {
+            val binder = service as RobotMessagingService.LocalBinder
+            mRobotMessagingService = binder.getService()
+            mBound = true
+        }
+
+        override fun onServiceDisconnected(className: ComponentName?) {
+            mBound = false
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_mode)
+
+        val intent = Intent(this, RobotMessagingService::class.java)
+        startService(intent)
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE)
 
         val mMoveForwardButton = findViewById(R.id.move_forward_button) as Button
         val mMoveBackwardButton = findViewById(R.id.move_backward_button) as Button
@@ -56,21 +46,21 @@ open class MainUserModeActivity : AppCompatActivity() {
         val mRaiseClaw = findViewById(R.id.raise_claw) as Button
         val mLowerClaw = findViewById(R.id.lower_claw) as Button
         val mOpenClaw = findViewById(R.id.open_claw) as Button
-        val mCloseClaw = findViewById(R.id.raise_claw) as Button
+        val mCloseClaw = findViewById(R.id.close_claw) as Button
 
         mMoveForwardButton.setOnTouchListener(OnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    sendCommand(ForwardCommand(true))
+                    mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.Forward, ForwardCommand(true)))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_UP -> {
                     // Released
-                    sendCommand(ForwardCommand(false))
+                    mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.Forward, ForwardCommand(false)))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_CANCEL -> {
-                    sendCommand(ForwardCommand(false))
+                    mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.Forward, ForwardCommand(false)))
                     return@OnTouchListener true
                 }
             }
@@ -81,15 +71,15 @@ open class MainUserModeActivity : AppCompatActivity() {
         mMoveBackwardButton.setOnTouchListener(OnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    sendCommand(BackwardCommand(true))
+                    mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.Backward, BackwardCommand(true)))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_UP -> {
-                    sendCommand(BackwardCommand(false))
+                    mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.Backward, BackwardCommand(false)))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_CANCEL -> {
-                    sendCommand(BackwardCommand(false))
+                    mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.Backward, BackwardCommand(false)))
                     return@OnTouchListener true
                 }
             }
@@ -99,15 +89,15 @@ open class MainUserModeActivity : AppCompatActivity() {
         mTurnLeft.setOnTouchListener(OnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    sendCommand(TurnLeftCommand(true))
+                    mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.TurnLeft, TurnLeftCommand(true)))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_UP -> {
-                    sendCommand(TurnLeftCommand(false))
+                    mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.TurnLeft, TurnLeftCommand(false)))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_CANCEL -> {
-                    sendCommand(TurnLeftCommand(false))
+                    mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.TurnLeft, TurnLeftCommand(false)))
                     return@OnTouchListener true
                 }
             }
@@ -117,17 +107,17 @@ open class MainUserModeActivity : AppCompatActivity() {
         mTurnRight.setOnTouchListener(OnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    sendCommand(TurnRightCommand(true))
+                    mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.TurnRight, TurnRightCommand(true)))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_UP -> {
                     // Released
-                    sendCommand(TurnRightCommand(false))
+                    mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.TurnRight, TurnRightCommand(false)))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_CANCEL -> {
                     // Released - Dragged finger outside
-                    sendCommand(TurnRightCommand(false))
+                    mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.TurnRight, TurnRightCommand(false)))
                     return@OnTouchListener true
                 }
             }
@@ -137,17 +127,17 @@ open class MainUserModeActivity : AppCompatActivity() {
         mRaiseClaw.setOnTouchListener(OnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    sendCommand(RaiseCraneCommand(true))
+                    mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.RaiseCrane, RaiseCraneCommand(true)))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_UP -> {
                     // Released
-                    sendCommand(RaiseCraneCommand(false))
+                    mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.RaiseCrane, RaiseCraneCommand(false)))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_CANCEL -> {
                     // Released - Dragged finger outside
-                    sendCommand(RaiseCraneCommand(false))
+                    mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.RaiseCrane, RaiseCraneCommand(false)))
                     return@OnTouchListener true
                 }
             }
@@ -157,26 +147,30 @@ open class MainUserModeActivity : AppCompatActivity() {
         mLowerClaw.setOnTouchListener(OnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    sendCommand(LowerCraneCommand(true))
+                    mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.LowerCrane, LowerCraneCommand(true)))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_UP -> {
                     // Released
-                    sendCommand(LowerCraneCommand(false))
+                    mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.LowerCrane, LowerCraneCommand(false)))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_CANCEL -> {
                     // Released - Dragged finger outside
-                    sendCommand(LowerCraneCommand(false))
+                    mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.LowerCrane, LowerCraneCommand(false)))
                     return@OnTouchListener true
                 }
             }
             false
         })
 
-        mOpenClaw.setOnClickListener { sendCommand(OpenClawCommand) }
-        mCloseClaw.setOnClickListener { sendCommand(CloseClawCommand) }
+        mOpenClaw.setOnClickListener(View.OnClickListener {v ->
+            mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.OpenClaw, OpenClawCommand(true)))
+        })
 
+        mCloseClaw.setOnClickListener(View.OnClickListener {v ->
+            mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.CloseClaw, CloseClawCommand(true)))
+        })
     }
 
     /*fun moveForward(distance : Double? = null){

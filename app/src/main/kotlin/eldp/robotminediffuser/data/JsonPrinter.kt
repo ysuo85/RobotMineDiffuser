@@ -17,13 +17,15 @@ fun main(args : Array<String>)
     printJson(CommandType.ChangeMode, ChangeModeCommand(UserModeEnum.MineDiffuse))
 
     println("Sample command to raise crane")
-    printJson(CommandType.RaiseCrane, RaiseCraneCommand(5.0))
+    printJson(CommandType.RaiseCrane, RaiseCraneCommand(true))
+    println("Sample command to stop raising crane")
+    printJson(CommandType.RaiseCrane, RaiseCraneCommand(false))
 
-    println("Sample command to move")
-    printJson(CommandType.Move, MoveCommand(10.0))
+    println("Sample command to move forward")
+    printJson(CommandType.Forward, ForwardCommand(true))
 
     println("Sample command to lower crane")
-    printJson(CommandType.LowerCrane, LowerCraneCommand(10.0))
+    printJson(CommandType.LowerCrane, LowerCraneCommand(true))
 
     println("Sample command to close claw")
     printJson(CommandType.CloseClaw)
@@ -43,9 +45,10 @@ fun main(args : Array<String>)
     println("Sample command for unlock")
     printJson(CommandType.Unlock)
 
-    println("Sample command to rotate")
-    printJson(CommandType.Rotate, RotateCommand(30.0))
-    printJson(CommandType.Rotate, RotateCommand(-30.0))
+    println("Sample command to turn left")
+    printJson(CommandType.TurnLeft, TurnLeftCommand(true))
+    println("Sample command to turn right")
+    printJson(CommandType.TurnRight, TurnRightCommand(true))
 
     println("Sample command to verify alignment")
     printJson(CommandType.VerifyAlignment)
@@ -53,8 +56,7 @@ fun main(args : Array<String>)
 
 fun printJson(commandType : CommandType, commandDetails : Any ?= null){
     val mapper = jacksonObjectMapper()
-    val sampletime = Timestamp(System.currentTimeMillis())
-    var messageObj = ArduinoMessage(sampletime, commandType, commandDetails)
+    var messageObj = ArduinoMessage(commandType, commandDetails)
     var messageStr = mapper.writeValueAsString(messageObj)
     println(messageStr)
 }

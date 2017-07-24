@@ -12,11 +12,11 @@
     tools:context="eldp.robotminediffuser.modes.MazeTraverseModeActivity">
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/turn_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button5"
-        android:layout_alignBottom="@+id/button5"
+        android:layout_alignBaseline="@+id/turn_left"
+        android:layout_alignBottom="@+id/turn_left"
         android:layout_alignParentEnd="true"
         android:background="@android:color/black"
         android:text="Right"
@@ -24,19 +24,7 @@
         android:textSize="18sp" />
 
     <Button
-        android:id="@+id/button5"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:background="@android:color/holo_green_light"
-        android:text="Stop"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        android:layout_above="@+id/button12"
-        android:layout_alignEnd="@+id/button10"
-        android:layout_marginBottom="36dp" />
-
-    <Button
-        android:id="@+id/button10"
+        android:id="@+id/move_forward_button"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="36dp"
@@ -44,11 +32,11 @@
         android:text="Forward"
         android:textColor="@android:color/holo_green_light"
         android:textSize="18sp"
-        android:layout_above="@+id/button5"
+        android:layout_above="@+id/move_backward_button"
         android:layout_centerHorizontal="true" />
 
     <Button
-        android:id="@+id/button12"
+        android:id="@+id/move_backward_button"
         android:layout_width="120dp"
         android:layout_height="50dp"
         android:background="@android:color/black"
@@ -56,15 +44,15 @@
         android:textColor="@android:color/holo_green_light"
         android:textSize="18sp"
         android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/button5"
+        android:layout_alignEnd="@+id/move_forward_button"
         android:layout_marginBottom="27dp" />
 
     <Button
-        android:id="@+id/button13"
+        android:id="@+id/turn_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button5"
-        android:layout_alignBottom="@+id/button5"
+        android:layout_alignBaseline="@+id/turn_right"
+        android:layout_alignBottom="@+id/turn_right"
         android:layout_alignParentStart="true"
         android:background="@android:color/black"
         android:text="Left"
@@ -72,43 +60,43 @@
         android:textSize="18sp" />
 
     <Button
-        android:id="@+id/button14"
+        android:id="@+id/raise_claw"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="26dp"
-        android:layout_toStartOf="@+id/button10"
-        android:text="Arm Up"
+        android:layout_toLeftOf="@+id/move_forward_button"
+        android:text="Raise Claw"
         android:textSize="18sp"
         />
 
     <Button
-        android:id="@+id/button15"
+        android:id="@+id/lower_claw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/button14"
-        android:layout_below="@+id/button14"
+        android:layout_alignStart="@+id/raise_claw"
+        android:layout_below="@+id/raise_claw"
         android:layout_marginTop="25dp"
-        android:text="Arm Down"
+        android:text="Lower Claw"
         android:textSize="18sp"
         />
 
     <Button
-        android:id="@+id/button16"
+        android:id="@+id/open_claw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Claw Open"
+        android:text="Open Claw"
         android:textSize="18sp"
-        android:layout_above="@+id/button15"
+        android:layout_toRightOf="@+id/move_forward_button"
         android:layout_alignParentEnd="true" />
 
     <Button
-        android:id="@+id/button18"
+        android:id="@+id/close_claw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/button16"
-        android:layout_alignTop="@+id/button15"
-        android:text="Claw Colse"
+        android:layout_alignEnd="@+id/move_forward_button"
+        android:layout_below="@+id/move_forward_button"
+        android:text="Close Claw"
         android:textSize="18sp"
         />
 </RelativeLayout>

@@ -105,7 +105,6 @@ class RobotMessagingService : Service() {
     }
 
     fun sendCommand(command : ArduinoMessage){
-        Log.d(TAG, "Sending stop command...")
         mRobotConnection?.write(mapper.writeValueAsBytes(command))
     }
 
