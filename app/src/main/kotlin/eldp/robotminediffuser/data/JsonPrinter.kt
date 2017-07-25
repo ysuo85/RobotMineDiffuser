@@ -23,15 +23,23 @@ fun main(args : Array<String>)
 
     println("Sample command to move forward")
     printJson(CommandType.Forward, ForwardCommand(true))
+    println("Sample command to stop moving forward")
+    printJson(CommandType.Forward, ForwardCommand(false))
 
     println("Sample command to lower crane")
     printJson(CommandType.LowerCrane, LowerCraneCommand(true))
+    println("Sample command to stop lowering crane")
+    printJson(CommandType.LowerCrane, LowerCraneCommand(false))
 
     println("Sample command to close claw")
-    printJson(CommandType.CloseClaw)
+    printJson(CommandType.CloseClaw, CloseClawCommand(true))
+    println("Sample command to stop closing claw")
+    printJson(CommandType.CloseClaw, CloseClawCommand(false))
 
     println("Sample command to open claw")
-    printJson(CommandType.OpenClaw)
+    printJson(CommandType.OpenClaw, OpenClawCommand(true))
+    println("Sample command to stop opening claw")
+    printJson(CommandType.OpenClaw, OpenClawCommand(false))
 
     println("Sample command for kill switch")
     printJson(CommandType.Kill)
@@ -47,8 +55,13 @@ fun main(args : Array<String>)
 
     println("Sample command to turn left")
     printJson(CommandType.TurnLeft, TurnLeftCommand(true))
+    println("Sample command to stop turning left")
+    printJson(CommandType.TurnLeft, TurnLeftCommand(false))
+
     println("Sample command to turn right")
     printJson(CommandType.TurnRight, TurnRightCommand(true))
+    println("Sample command to stop turning right")
+    printJson(CommandType.TurnRight, TurnRightCommand(false))
 
     println("Sample command to verify alignment")
     printJson(CommandType.VerifyAlignment)
