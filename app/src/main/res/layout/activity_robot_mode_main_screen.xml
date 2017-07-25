@@ -2,7 +2,7 @@
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/activity_maze_traverse_mode"
+        android:id="@+id/activity_robot_mode_main_screen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -10,7 +10,7 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:background="@android:color/darker_gray"
-        tools:context="eldp.robotminediffuser.modes.MazeTraverseModeActivity">
+        tools:context="eldp.robotminediffuser.modes.ControllerModeActivity">
 
     <Button
         android:id="@+id/kill_button"

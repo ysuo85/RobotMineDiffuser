@@ -16,20 +16,18 @@
             android:label="@string/app_name"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity
-                android:name=".LoginActivity"
-                android:label="@string/app_name">
-        </activity>
         <activity android:name=".modes.MainUserModeActivity">
+        </activity>
+
+        <activity android:name=".modes.ControllerModeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".modes.MazeTraverseModeActivity">
-        </activity>
-        <activity android:name=".modes.MineDiffuseModeActivity">
+
+        <activity android:name=".LoginActivity">
         </activity>
 
         <service

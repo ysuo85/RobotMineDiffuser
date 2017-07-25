@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_maze_traverse_mode"
+    android:id="@+id/activity_control_robot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/darker_gray"
@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="eldp.robotminediffuser.modes.MazeTraverseModeActivity">
+    tools:context="eldp.robotminediffuser.modes.MainUserModeActivity">
 
     <Button
         android:id="@+id/turn_right"

@@ -7,6 +7,7 @@ import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
@@ -16,6 +17,7 @@ import eldp.robotminediffuser.data.*
 import eldp.robotminediffuser.services.RobotMessagingService
 
 open class MainUserModeActivity : AppCompatActivity() {
+    private val TAG = "MainUserModeActivity"
     var mRobotMessagingService: RobotMessagingService ?= null
     var mBound = false
 
@@ -33,7 +35,7 @@ open class MainUserModeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_user_mode)
+        setContentView(R.layout.activity_control_robot)
 
         val intent = Intent(this, RobotMessagingService::class.java)
         startService(intent)
@@ -51,15 +53,18 @@ open class MainUserModeActivity : AppCompatActivity() {
         mMoveForwardButton.setOnTouchListener(OnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
+                    Log.d(TAG, "Moving forward...")
                     mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.Forward, ForwardCommand(true)))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_UP -> {
                     // Released
+                    Log.d(TAG, "Stopping moving forward...")
                     mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.Forward, ForwardCommand(false)))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_CANCEL -> {
+                    Log.d(TAG, "Stopping moving forward...")
                     mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.Forward, ForwardCommand(false)))
                     return@OnTouchListener true
                 }
@@ -71,14 +76,17 @@ open class MainUserModeActivity : AppCompatActivity() {
         mMoveBackwardButton.setOnTouchListener(OnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
+                    Log.d(TAG, "Moving backward...")
                     mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.Backward, BackwardCommand(true)))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_UP -> {
+                    Log.d(TAG, "Stopping moving backward...")
                     mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.Backward, BackwardCommand(false)))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_CANCEL -> {
+                    Log.d(TAG, "Stopping moving backward...")
                     mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.Backward, BackwardCommand(false)))
                     return@OnTouchListener true
                 }
@@ -89,14 +97,17 @@ open class MainUserModeActivity : AppCompatActivity() {
         mTurnLeft.setOnTouchListener(OnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
+                    Log.d(TAG, "Rotating left...")
                     mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.TurnLeft, TurnLeftCommand(true)))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_UP -> {
+                    Log.d(TAG, "Stopping rotating left...")
                     mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.TurnLeft, TurnLeftCommand(false)))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_CANCEL -> {
+                    Log.d(TAG, "Stopping rotating left...")
                     mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.TurnLeft, TurnLeftCommand(false)))
                     return@OnTouchListener true
                 }
@@ -107,16 +118,19 @@ open class MainUserModeActivity : AppCompatActivity() {
         mTurnRight.setOnTouchListener(OnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
+                    Log.d(TAG, "Rotating right...")
                     mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.TurnRight, TurnRightCommand(true)))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_UP -> {
                     // Released
+                    Log.d(TAG, "Stopping rotating right...")
                     mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.TurnRight, TurnRightCommand(false)))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_CANCEL -> {
                     // Released - Dragged finger outside
+                    Log.d(TAG, "Stopping rotating right...")
                     mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.TurnRight, TurnRightCommand(false)))
                     return@OnTouchListener true
                 }
@@ -127,16 +141,19 @@ open class MainUserModeActivity : AppCompatActivity() {
         mRaiseClaw.setOnTouchListener(OnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
+                    Log.d(TAG, "Raising crane...")
                     mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.RaiseCrane, RaiseCraneCommand(true)))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_UP -> {
                     // Released
+                    Log.d(TAG, "Stopping crane...")
                     mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.RaiseCrane, RaiseCraneCommand(false)))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_CANCEL -> {
                     // Released - Dragged finger outside
+                    Log.d(TAG, "Stopping crane...")
                     mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.RaiseCrane, RaiseCraneCommand(false)))
                     return@OnTouchListener true
                 }
@@ -147,16 +164,19 @@ open class MainUserModeActivity : AppCompatActivity() {
         mLowerClaw.setOnTouchListener(OnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
+                    Log.d(TAG, "Lowering crane...")
                     mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.LowerCrane, LowerCraneCommand(true)))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_UP -> {
                     // Released
+                    Log.d(TAG, "Stopping crane...")
                     mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.LowerCrane, LowerCraneCommand(false)))
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_CANCEL -> {
                     // Released - Dragged finger outside
+                    Log.d(TAG, "Stopping crane...")
                     mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.LowerCrane, LowerCraneCommand(false)))
                     return@OnTouchListener true
                 }
@@ -165,10 +185,12 @@ open class MainUserModeActivity : AppCompatActivity() {
         })
 
         mOpenClaw.setOnClickListener(View.OnClickListener {v ->
+            Log.d(TAG, "Opening claw...")
             mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.OpenClaw, OpenClawCommand(true)))
         })
 
         mCloseClaw.setOnClickListener(View.OnClickListener {v ->
+            Log.d(TAG, "Closing claw...")
             mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.CloseClaw, CloseClawCommand(true)))
         })
     }
