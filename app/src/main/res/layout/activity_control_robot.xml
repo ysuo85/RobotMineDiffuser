@@ -15,23 +15,25 @@
         android:id="@+id/turn_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/turn_left"
-        android:layout_alignBottom="@+id/turn_left"
-        android:layout_alignParentEnd="true"
         android:background="@android:color/black"
         android:text="Right"
         android:textColor="@android:color/holo_green_light"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:visibility="visible"
+        android:layout_above="@+id/move_backward_button"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="27dp" />
 
     <Button
         android:id="@+id/move_forward_button"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="92dp"
         android:background="@android:color/black"
         android:text="Forward"
         android:textColor="@android:color/holo_green_light"
         android:textSize="18sp"
+        android:visibility="visible"
         android:layout_above="@+id/move_backward_button"
         android:layout_centerHorizontal="true" />
 
@@ -51,52 +53,61 @@
         android:id="@+id/turn_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/turn_right"
-        android:layout_alignBottom="@+id/turn_right"
-        android:layout_alignParentStart="true"
         android:background="@android:color/black"
         android:text="Left"
         android:textColor="@android:color/holo_green_light"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:layout_alignBaseline="@+id/turn_right"
+        android:layout_alignBottom="@+id/turn_right"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:id="@+id/raise_claw"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="26dp"
-        android:layout_toLeftOf="@+id/move_forward_button"
+        android:layout_width="140dp"
+        android:layout_height="50dp"
         android:text="Raise Claw"
         android:textSize="18sp"
-        />
+        android:layout_marginTop="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/lower_claw" />
 
     <Button
         android:id="@+id/lower_claw"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/raise_claw"
-        android:layout_below="@+id/raise_claw"
-        android:layout_marginTop="25dp"
+        android:layout_height="50dp"
         android:text="Lower Claw"
         android:textSize="18sp"
-        />
+        android:layout_alignBottom="@+id/close_claw"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:id="@+id/open_claw"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
         android:text="Open Claw"
         android:textSize="18sp"
-        android:layout_toRightOf="@+id/move_forward_button"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignTop="@+id/raise_claw"
+        android:layout_alignStart="@+id/close_claw" />
 
     <Button
         android:id="@+id/close_claw"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/move_forward_button"
-        android:layout_below="@+id/move_forward_button"
+        android:layout_height="50dp"
         android:text="Close Claw"
         android:textSize="18sp"
+
+        android:layout_below="@+id/raise_claw"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="31dp" />
+
+    <Button
+        android:id="@+id/stop"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@+id/turn_right"
+        android:layout_centerHorizontal="true"
+        android:text="STOP"
+        android:textSize="18sp"
         />
+
 </RelativeLayout>
