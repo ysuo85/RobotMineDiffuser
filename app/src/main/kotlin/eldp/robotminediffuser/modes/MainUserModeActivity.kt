@@ -49,6 +49,12 @@ open class MainUserModeActivity : AppCompatActivity() {
         val mLowerClaw = findViewById(R.id.lower_claw) as Button
         val mOpenClaw = findViewById(R.id.open_claw) as Button
         val mCloseClaw = findViewById(R.id.close_claw) as Button
+        val mStop = findViewById(R.id.stop) as Button
+
+        mStop.setOnClickListener(View.OnClickListener { v ->
+            Log.d(TAG, "Stopping all motors")
+            mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.Stop))
+        })
 
         mMoveForwardButton.setOnTouchListener(OnTouchListener { v, event ->
             when (event.action) {
@@ -184,14 +190,50 @@ open class MainUserModeActivity : AppCompatActivity() {
             false
         })
 
-        mOpenClaw.setOnClickListener(View.OnClickListener {v ->
-            Log.d(TAG, "Opening claw...")
-            mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.OpenClaw, OpenClawCommand(true)))
+        mOpenClaw.setOnTouchListener(OnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    Log.d(TAG, "Opening claw...")
+                    mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.OpenClaw, OpenClawCommand(true)))
+                    return@OnTouchListener true
+                }
+                MotionEvent.ACTION_UP -> {
+                    // Released
+                    Log.d(TAG, "Stopping claw...")
+                    mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.OpenClaw, OpenClawCommand(false)))
+                    return@OnTouchListener true
+                }
+                MotionEvent.ACTION_CANCEL -> {
+                    // Released - Dragged finger outside
+                    Log.d(TAG, "Stopping claw...")
+                    mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.OpenClaw, OpenClawCommand(false)))
+                    return@OnTouchListener true
+                }
+            }
+            false
         })
 
-        mCloseClaw.setOnClickListener(View.OnClickListener {v ->
-            Log.d(TAG, "Closing claw...")
-            mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.CloseClaw, CloseClawCommand(true)))
+        mCloseClaw.setOnTouchListener(OnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    Log.d(TAG, "Closing claw...")
+                    mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.CloseClaw, CloseClawCommand(true)))
+                    return@OnTouchListener true
+                }
+                MotionEvent.ACTION_UP -> {
+                    // Released
+                    Log.d(TAG, "Stopping claw...")
+                    mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.CloseClaw, CloseClawCommand(false)))
+                    return@OnTouchListener true
+                }
+                MotionEvent.ACTION_CANCEL -> {
+                    // Released - Dragged finger outside
+                    Log.d(TAG, "Stopping claw...")
+                    mRobotMessagingService?.sendCommand(ArduinoMessage(CommandType.CloseClaw, CloseClawCommand(false)))
+                    return@OnTouchListener true
+                }
+            }
+            false
         })
     }
 

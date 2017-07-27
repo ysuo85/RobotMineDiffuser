@@ -72,4 +72,5 @@ fun printJson(commandType : CommandType, commandDetails : Any ?= null){
     var messageObj = ArduinoMessage(commandType, commandDetails)
     var messageStr = mapper.writeValueAsString(messageObj)
     println(messageStr)
+    println("Number of bytes: ${messageStr.length}")
 }

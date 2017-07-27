@@ -19,7 +19,7 @@ import java.io.OutputStream
 
 class RobotMessagingService : Service() {
     private val TAG = "ROBOT_MESSAGING_SERVICE"
-    private val ARDUINO_BT_NAME = "ysuomac"
+    private val ARDUINO_BT_NAME = "Makeblock"
     private var mHandler: Handler ?= null // handler that gets info from Bluetooth service
     private val mMessenger: Messenger
     private val mBinder : IBinder
@@ -236,6 +236,14 @@ class RobotMessagingService : Service() {
         // Call this from the main activity to send data to the remote device.
         fun write(bytes: ByteArray) {
             try {
+//                var encodedBytes : ByteArray = kotlin.ByteArray(bytes.size + 1)
+//                val dataSize : Byte = bytes.size.toByte()
+//                Log.d(TAG,"Data size: ${dataSize}")
+//                encodedBytes[0] = dataSize
+//                for (i in bytes.indices){
+//                    encodedBytes[i+1] = bytes[i]
+//                }
+
                 mmOutStream.write(bytes)
 
                 // Share the sent message with the UI activity.
