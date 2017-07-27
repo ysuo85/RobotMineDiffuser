@@ -21,7 +21,28 @@ class LoginActivity : Activity() {
         btnSubmit = findViewById<View>(R.id.btnSubmit) as Button
         passwordVal = getString(R.string.password)
         addListenerOnButton()
+
+        val intent : Intent = getIntent()
+        val lock_flag : Boolean = intent.getBooleanExtra("lock_flag", false)
+        val kill_flag : Boolean = intent.getBooleanExtra("kill_flag", false)
+
+        if(lock_flag) {
+            val imgFile = File("lock.png")
+
+            if (imgFile.exists()) {
+
+                val myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath())
+                val myImage = findViewById(R.id.imageviewTest) as ImageView
+                myImage.setImageBitmap(myBitmap)
+            }
+
+        }
+
+        if(kill_flag) {
+
+        }
     }
+
 
     fun addListenerOnButton() {
         btnSubmit!!.setOnClickListener {

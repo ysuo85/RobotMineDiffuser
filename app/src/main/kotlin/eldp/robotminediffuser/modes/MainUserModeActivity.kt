@@ -78,7 +78,6 @@ open class MainUserModeActivity : AppCompatActivity() {
             false
         })
 
-
         mMoveBackwardButton.setOnTouchListener(OnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
@@ -236,66 +235,4 @@ open class MainUserModeActivity : AppCompatActivity() {
             false
         })
     }
-
-    /*fun moveForward(distance : Double? = null){
-        when(distance){
-            null -> moveBot(-1.0, 0.0)
-            else -> moveBot(distance, 0.0)
-        }
-    }
-
-    fun moveAft(distance : Double? = null){
-        when(distance){
-            null -> moveBot(-1.0, 0.0)
-            else -> moveBot(distance, 0.0)
-        }
-    }
-
-    fun turnLeft(angle : Double? = null){
-        when(angle){
-            null -> moveBot(0.0, -1.0)
-            else -> moveBot(0.0, angle)
-        }
-    }
-
-    fun turnRight(distance : Double? = null){
-        when(distance){
-            null -> moveBot(-1.0, 0.0)
-            else -> moveBot(distance, 0.0)
-        }
-    }
-
-    fun raiseClaw(distance : Double? = null){
-        when(distance){
-            null -> moveArm(-1.0, 0.0)
-            else -> moveArm(distance, 0.0)
-        }
-    }
-
-    fun lowerClaw(distance : Double? = null){
-        when(distance){
-            null -> moveArm(-1.0, 0.0)
-            else -> moveArm(distance, 0.0)
-        }
-    }
-
-    fun operateClaw(){
-
-    }
-
-    fun moveBot(distance : Double, orientationDegree : Double){
-        // TODO: Implement class to send bluetooth directional data
-    }
-
-    fun moveArm(distance : Double, orientationDegree : Double){
-        // TODO: Implement class to send bluetooth directional data
-    }
-
-    fun moveGrabber(distance : Double, orientationDegree : Double){
-        // TODO: Implement class to send bluetooth directional data
-    }
-
-    fun stop(){
-        // TODO: Implement class to send bluetooth directional data
-    }*/
 }
