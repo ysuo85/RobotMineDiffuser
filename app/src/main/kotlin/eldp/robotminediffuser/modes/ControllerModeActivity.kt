@@ -35,7 +35,6 @@ open class ControllerModeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_robot_mode_main_screen)
 
         val intent = Intent(this, RobotMessagingService::class.java)
-        startService(intent)
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE)
 
         val mKillButton = findViewById(R.id.kill_button) as Button
